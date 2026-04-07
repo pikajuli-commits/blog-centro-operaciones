@@ -1,0 +1,222 @@
+---
+import TagBadge from './TagBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+  collection: 'blog' | 'what-if' | 'economia';
+  tags: string[];
+  videoUrl?: string;
+  latex?: boolean;
+  scenario?: string;   // para what-if
+  level?: string;      // para economia
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  slug,
+  collection,
+  tags,
+  videoUrl,
+  latex,
+  scenario,
+  level,
+} = Astro.props;
+
+const href = `/${collection}/${slug}`;
+
+const formattedDate = pubDate.toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const collectionLabels: Record<string, string> = {
+  blog: 'Análisis',
+  'what-if': 'What If',
+  economia: 'Economía',
+};
+
+const levelColors: Record<string, string> = {
+  intro: '#22c55e',
+  intermedio: '#f59e0b',
+  avanzado: '#ef4444',
+};
+---
+
+<article class="glass-card article-card">
+  <div class="card-meta">
+    <span class="collection-badge">{collectionLabels[collection]}</span>
+    {level && (
+      <span class="level-badge" style={`color: ${levelColors[level] ?? '#C0C8D8'}`}>
+        {level}
+      </span>
+    )}
+  </div>
+
+  <h2 class="card-title">
+    <a href={href} class="card-title-link">{title}</a>
+  </h2>
+
+  {scenario && (
+    <p class="card-scenario">{scenario}</p>
+  )}
+
+  <p class="card-desc">{description}</p>
+
+  <div class="card-tags">
+    {tags.slice(0, 3).map(tag => <TagBadge tag={tag} />)}
+  </div>
+
+  <footer class="card-footer">
+    <time datetime={pubDate.toISOString()} class="card-date">{formattedDate}</time>
+    <div class="card-icons">
+      {videoUrl && (
+        <span class="card-icon" title="Incluye video">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+      )}
+      {latex && (
+        <span class="card-icon" title="Incluye fórmulas LaTeX">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+          </svg>
+        </span>
+      )}
+    </div>
+    <a href={href} class="card-read-more" aria-label={`Leer: ${title}`}>
+      Leer más
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </footer>
+</article>
+
+<style>
+  .article-card {
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .collection-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(192, 200, 216, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .level-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.1rem 0.4rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0.2rem;
+  }
+
+  .card-title {
+    font-family: var(--font-headline);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-nebula-white);
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .card-title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+  }
+
+  .card-title-link:hover {
+    color: var(--color-glow-blue);
+  }
+
+  .card-scenario {
+    font-size: 0.85rem;
+    color: var(--color-electric-blue);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--color-stellar-silver);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(30, 144, 255, 0.1);
+  }
+
+  .card-date {
+    font-size: 0.78rem;
+    color: rgba(192, 200, 216, 0.45);
+    font-family: var(--font-mono);
+    flex: 1;
+  }
+
+  .card-icons {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .card-icon {
+    color: rgba(30, 144, 255, 0.5);
+    display: flex;
+    align-items: center;
+  }
+
+  .card-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-electric-blue);
+    text-decoration: none;
+    transition: color 0.15s, gap 0.15s;
+  }
+
+  .card-read-more:hover {
+    color: var(--color-glow-blue);
+    gap: 0.5rem;
+  }
+</style>

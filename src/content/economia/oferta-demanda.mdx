@@ -1,0 +1,78 @@
+---
+title: "Equilibrio de Mercado: Oferta y Demanda"
+description: "Modelo matemático del equilibrio competitivo con derivadas y álgebra básica"
+pubDate: 2026-04-07
+tags: ["microeconomía", "modelos", "equilibrio", "LaTeX"]
+level: "intro"
+requires: []
+latex: true
+draft: false
+---
+
+## El modelo básico
+
+En microeconomía, el **equilibrio de mercado** es el punto donde la cantidad demandada iguala a la cantidad ofrecida.
+
+### Función de demanda
+
+La cantidad demandada $Q_d$ en función del precio $P$ tiene la forma lineal:
+
+$$Q_d = a - bP$$
+
+Donde:
+- $a > 0$ es la **demanda autónoma** (demanda cuando $P = 0$)
+- $b > 0$ es la **sensibilidad al precio** (elasticidad-precio lineal)
+
+### Función de oferta
+
+La cantidad ofrecida $Q_s$ también depende del precio:
+
+$$Q_s = c + dP$$
+
+Donde:
+- $c$ puede ser negativo (hay un precio mínimo de producción)
+- $d > 0$ indica que a mayor precio, mayor oferta
+
+## Encontrando el equilibrio
+
+El equilibrio se da cuando $Q_d = Q_s$:
+
+$$a - bP^* = c + dP^*$$
+
+Despejando $P^*$:
+
+$$a - c = bP^* + dP^* = (b + d)P^*$$
+
+$$\boxed{P^* = \frac{a - c}{b + d}}$$
+
+Y la cantidad de equilibrio $Q^*$:
+
+$$Q^* = a - b \cdot P^* = a - b \cdot \frac{a-c}{b+d} = \frac{a(b+d) - b(a-c)}{b+d} = \frac{ad + bc}{b+d}$$
+
+$$\boxed{Q^* = \frac{ad + bc}{b + d}}$$
+
+## Ejemplo numérico
+
+Sea $a = 100$, $b = 2$, $c = 10$, $d = 3$.
+
+$$P^* = \frac{100 - 10}{2 + 3} = \frac{90}{5} = 18$$
+
+$$Q^* = \frac{100 \cdot 3 + 10 \cdot 2}{2 + 3} = \frac{300 + 20}{5} = \frac{320}{5} = 64$$
+
+El mercado se equilibra con un precio de $18 y una cantidad de 64 unidades.
+
+## Análisis de estática comparativa
+
+¿Qué pasa si $a$ aumenta (la demanda sube)?
+
+$$\frac{\partial P^*}{\partial a} = \frac{1}{b+d} > 0$$
+
+El precio de equilibrio sube. Esto es intuitivo: si la demanda aumenta con oferta constante, el precio sube.
+
+$$\frac{\partial Q^*}{\partial a} = \frac{d}{b+d} > 0$$
+
+La cantidad también sube, pero en proporción menor al aumento en la demanda autónoma.
+
+## Próximo paso
+
+En la guía de [elasticidad de demanda](/economia/elasticidad) veremos cómo $b$ y $d$ determinan quién "absorbe" más un impuesto o subsidio.

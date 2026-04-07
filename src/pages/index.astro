@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import ArticleCard from '../components/blog/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+// Obtener los últimos posts de todas las colecciones
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const whatIfPosts = await getCollection('what-if', ({ data }) => !data.draft);
+const economiaPosts = await getCollection('economia', ({ data }) => !data.draft);
+
+const allPosts = [...blogPosts, ...whatIfPosts, ...economiaPosts]
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title="Centro de Operaciones"
+  description="Blog de economía, geopolítica y scripts What If. Análisis técnicos con modelos matemáticos, LaTeX y videos cortos."
+>
+  <Hero />
+
+  <section class="latest-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">Últimas publicaciones</h2>
+        <a href="/blog" class="section-link">
+          Ver todo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="posts-grid">
+        {allPosts.map(post => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.id}
+            collection={post.collection as 'blog' | 'what-if' | 'economia'}
+            tags={post.data.tags}
+            videoUrl={post.data.videoUrl}
+            latex={post.data.latex}
+            scenario={'scenario' in post.data ? post.data.scenario : undefined}
+            level={'level' in post.data ? post.data.level : undefined}
+          />
+        ))}
+      </div>
+
+      {allPosts.length === 0 && (
+        <div class="empty-state">
+          <p>Próximamente — los primeros artículos están en camino.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .latest-section {
+    padding: 2rem 0 4rem;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: var(--font-headline);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-nebula-white);
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--color-electric-blue);
+    text-decoration: none;
+    transition: color 0.15s, gap 0.15s;
+  }
+
+  .section-link:hover {
+    color: var(--color-glow-blue);
+    gap: 0.55rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(192, 200, 216, 0.4);
+    font-style: italic;
+  }
+</style>

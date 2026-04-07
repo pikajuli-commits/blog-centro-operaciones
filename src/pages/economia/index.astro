@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/blog/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('economia', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const byLevel = {
+  intro: posts.filter(p => p.data.level === 'intro'),
+  intermedio: posts.filter(p => p.data.level === 'intermedio'),
+  avanzado: posts.filter(p => p.data.level === 'avanzado'),
+};
+---
+
+<BaseLayout
+  title="Economía"
+  description="Guías de microeconomía y macroeconomía con modelos matemáticos y LaTeX. Desde equilibrio de mercado hasta teoría de juegos."
+>
+  <section class="list-page">
+    <div class="list-inner">
+      <header class="list-header">
+        <div class="list-tag">Guías técnicas</div>
+        <h1 class="list-title">Economía</h1>
+        <p class="list-subtitle">
+          Modelos matemáticos con LaTeX, desde fundamentos hasta temas avanzados.
+          Cada guía construye sobre la anterior.
+        </p>
+      </header>
+
+      {posts.length > 0 ? (
+        <>
+          {byLevel.intro.length > 0 && (
+            <div class="level-section">
+              <h2 class="level-title">
+                <span class="level-dot level-dot--intro"></span>
+                Introducción
+              </h2>
+              <div class="posts-grid">
+                {byLevel.intro.map(post => (
+                  <ArticleCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    pubDate={post.data.pubDate}
+                    slug={post.id}
+                    collection="economia"
+                    tags={post.data.tags}
+                    videoUrl={post.data.videoUrl}
+                    latex={post.data.latex}
+                    level={post.data.level}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {byLevel.intermedio.length > 0 && (
+            <div class="level-section">
+              <h2 class="level-title">
+                <span class="level-dot level-dot--intermedio"></span>
+                Intermedio
+              </h2>
+              <div class="posts-grid">
+                {byLevel.intermedio.map(post => (
+                  <ArticleCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    pubDate={post.data.pubDate}
+                    slug={post.id}
+                    collection="economia"
+                    tags={post.data.tags}
+                    videoUrl={post.data.videoUrl}
+                    latex={post.data.latex}
+                    level={post.data.level}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {byLevel.avanzado.length > 0 && (
+            <div class="level-section">
+              <h2 class="level-title">
+                <span class="level-dot level-dot--avanzado"></span>
+                Avanzado
+              </h2>
+              <div class="posts-grid">
+                {byLevel.avanzado.map(post => (
+                  <ArticleCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    pubDate={post.data.pubDate}
+                    slug={post.id}
+                    collection="economia"
+                    tags={post.data.tags}
+                    videoUrl={post.data.videoUrl}
+                    latex={post.data.latex}
+                    level={post.data.level}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <p class="empty">Próximamente — las primeras guías están en construcción.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list-page { padding: 3rem 0 5rem; }
+  .list-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .list-header { margin-bottom: 2.5rem; }
+  .list-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-electric-blue);
+    background: rgba(30, 144, 255, 0.1);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .list-title {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-nebula-white);
+    margin-bottom: 0.5rem;
+  }
+  .list-subtitle {
+    color: var(--color-stellar-silver);
+    font-size: 1rem;
+    max-width: 55ch;
+    line-height: 1.6;
+  }
+  .level-section { margin-bottom: 2.5rem; }
+  .level-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-headline);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-stellar-silver);
+    margin-bottom: 1rem;
+  }
+  .level-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .level-dot--intro { background: #22c55e; }
+  .level-dot--intermedio { background: #f59e0b; }
+  .level-dot--avanzado { background: #ef4444; }
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+  .empty {
+    color: rgba(192, 200, 216, 0.4);
+    font-style: italic;
+    padding: 2rem 0;
+  }
+</style>

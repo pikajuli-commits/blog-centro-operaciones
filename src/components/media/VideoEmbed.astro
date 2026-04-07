@@ -1,0 +1,118 @@
+---
+interface Props {
+  url: string;
+  title?: string;
+  caption?: string;
+}
+
+const { url, title = 'Video', caption } = Astro.props;
+
+type EmbedResult = { type: 'youtube' | 'tiktok'; embedUrl: string } | { type: 'unknown'; embedUrl: null };
+
+function getEmbedInfo(rawUrl: string): EmbedResult {
+  try {
+    if (rawUrl.includes('youtube.com/shorts/')) {
+      const videoId = rawUrl.split('/shorts/')[1]?.split('?')[0];
+      if (videoId) return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${videoId}` };
+    }
+    if (rawUrl.includes('youtu.be/')) {
+      const videoId = rawUrl.split('youtu.be/')[1]?.split('?')[0];
+      if (videoId) return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${videoId}` };
+    }
+    if (rawUrl.includes('youtube.com/watch')) {
+      const u = new URL(rawUrl);
+      const videoId = u.searchParams.get('v');
+      if (videoId) return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${videoId}` };
+    }
+    if (rawUrl.includes('tiktok.com')) {
+      const videoId = rawUrl.split('/video/')[1]?.split('?')[0];
+      if (videoId) return { type: 'tiktok', embedUrl: `https://www.tiktok.com/embed/v2/${videoId}` };
+    }
+  } catch {
+    // URL inválida
+  }
+  return { type: 'unknown', embedUrl: null };
+}
+
+const embed = getEmbedInfo(url);
+const isTiktok = embed.type === 'tiktok';
+---
+
+{embed.embedUrl ? (
+  <figure class={`video-embed video-embed--${embed.type}`}>
+    <div class={`video-wrapper ${isTiktok ? 'video-wrapper--tiktok' : 'video-wrapper--wide'}`}>
+      <iframe
+        src={embed.embedUrl}
+        title={title}
+        loading="lazy"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        class="video-iframe"
+      ></iframe>
+    </div>
+    {caption && <figcaption class="video-caption">{caption}</figcaption>}
+  </figure>
+) : (
+  <div class="video-error">
+    <span>Video no disponible: {url}</span>
+  </div>
+)}
+
+<style>
+  .video-embed {
+    margin: 1.5rem 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(30, 144, 255, 0.15);
+    background: var(--color-space-card);
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .video-wrapper--wide {
+    padding-bottom: 56.25%; /* 16:9 */
+  }
+
+  .video-wrapper--tiktok {
+    max-width: 340px;
+    margin: 0 auto;
+    padding-bottom: 0;
+    height: 580px;
+  }
+
+  .video-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-wrapper--tiktok .video-iframe {
+    position: static;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-caption {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    color: rgba(192, 200, 216, 0.55);
+    font-style: italic;
+    text-align: center;
+    border-top: 1px solid rgba(30, 144, 255, 0.1);
+  }
+
+  .video-error {
+    padding: 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: #fca5a5;
+    font-family: var(--font-mono);
+  }
+</style>

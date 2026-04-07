@@ -1,0 +1,40 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+}
+
+const { tag, href } = Astro.props;
+---
+
+{href ? (
+  <a href={href} class="tag-badge tag-badge--link">#{tag}</a>
+) : (
+  <span class="tag-badge">#{tag}</span>
+)}
+
+<style>
+  .tag-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    background: rgba(30, 144, 255, 0.1);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    border-radius: 0.3rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--color-electric-blue);
+    line-height: 1;
+  }
+
+  .tag-badge--link {
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+    cursor: pointer;
+  }
+
+  .tag-badge--link:hover {
+    background: rgba(30, 144, 255, 0.2);
+    border-color: rgba(30, 144, 255, 0.4);
+    color: var(--color-glow-blue);
+  }
+</style>

@@ -1,0 +1,217 @@
+/* Google Fonts — Space Grotesk + IBM Plex Mono + Inter */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+/* KaTeX CSS — necesario para renderizar LaTeX */
+@import "katex/dist/katex.min.css";
+
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Paleta "Azul Sideral" */
+  --color-space-deep: #0A0E1A;
+  --color-space-mid: #0D1526;
+  --color-space-card: #111827;
+  --color-electric-blue: #1E90FF;
+  --color-electric-dim: #1565C0;
+  --color-glow-blue: #3DABFF;
+  --color-stellar-silver: #C0C8D8;
+  --color-nebula-white: #F0F4FF;
+
+  /* Tipografía */
+  --font-headline: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', Consolas, monospace;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Sombras cinemáticas */
+  --shadow-glow-blue: 0 0 20px rgba(30, 144, 255, 0.3);
+  --shadow-glow-blue-lg: 0 0 40px rgba(30, 144, 255, 0.4);
+  --shadow-cinematic: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== BASE ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-space-deep);
+  color: var(--color-stellar-silver);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== GLASSMORPHISM ===== */
+.glass-card {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 144, 255, 0.15);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(30, 144, 255, 0.4);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+/* ===== GLOW LINKS ===== */
+.glow-link {
+  color: var(--color-electric-blue);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.glow-link:hover {
+  color: var(--color-glow-blue);
+  text-shadow: 0 0 12px rgba(30, 144, 255, 0.6);
+}
+
+/* ===== PARTÍCULAS DE FONDO (CSS puro) ===== */
+.particles-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.particles-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(30, 144, 255, 0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 15%, rgba(192, 200, 216, 0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 65%, rgba(30, 144, 255, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(192, 200, 216, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 55%, rgba(30, 144, 255, 0.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 55% 10%, rgba(61, 171, 255, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 90%, rgba(192, 200, 216, 0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 90% 45%, rgba(30, 144, 255, 0.25) 0%, transparent 100%);
+  pointer-events: none;
+  animation: twinkle 6s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.particles-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* ===== BOTONES ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-electric-blue);
+  color: white;
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-glow-blue);
+  box-shadow: var(--shadow-glow-blue);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--color-stellar-silver);
+  font-family: var(--font-headline);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid rgba(192, 200, 216, 0.3);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-electric-blue);
+  color: var(--color-nebula-white);
+}
+
+/* ===== PROSE (artículos MDX) ===== */
+.prose-sideral {
+  --tw-prose-body: var(--color-stellar-silver);
+  --tw-prose-headings: var(--color-nebula-white);
+  --tw-prose-lead: var(--color-stellar-silver);
+  --tw-prose-links: var(--color-electric-blue);
+  --tw-prose-bold: var(--color-nebula-white);
+  --tw-prose-counters: var(--color-stellar-silver);
+  --tw-prose-bullets: var(--color-electric-blue);
+  --tw-prose-hr: rgba(30, 144, 255, 0.2);
+  --tw-prose-quotes: var(--color-nebula-white);
+  --tw-prose-quote-borders: var(--color-electric-blue);
+  --tw-prose-captions: var(--color-stellar-silver);
+  --tw-prose-code: var(--color-glow-blue);
+  --tw-prose-pre-code: var(--color-nebula-white);
+  --tw-prose-pre-bg: #0d1117;
+  --tw-prose-th-borders: rgba(30, 144, 255, 0.3);
+  --tw-prose-td-borders: rgba(30, 144, 255, 0.1);
+  max-width: 75ch;
+  font-family: var(--font-body);
+  line-height: 1.8;
+}
+
+.prose-sideral pre {
+  border: 1px solid rgba(30, 144, 255, 0.15);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-cinematic);
+}
+
+.prose-sideral :not(pre) > code {
+  background: rgba(30, 144, 255, 0.1);
+  border: 1px solid rgba(30, 144, 255, 0.2);
+  border-radius: 0.25rem;
+  padding: 0.1em 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.prose-sideral blockquote {
+  background: rgba(17, 24, 39, 0.4);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 1rem 1.5rem;
+}
+
+.prose-sideral h2 {
+  font-family: var(--font-headline);
+  border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.prose-sideral h3 {
+  font-family: var(--font-headline);
+}
+
+/* KaTeX display blocks */
+.katex-display {
+  background: rgba(17, 24, 39, 0.5);
+  border: 1px solid rgba(30, 144, 255, 0.15);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-space-deep); }
+::-webkit-scrollbar-thumb { background: rgba(30, 144, 255, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-electric-blue); }

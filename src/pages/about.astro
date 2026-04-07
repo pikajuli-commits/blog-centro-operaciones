@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="Sobre el Centro de Operaciones: un blog de economía, geopolítica y scripts What If."
+>
+  <section class="about-page">
+    <div class="about-inner">
+      <header class="about-header">
+        <div class="about-avatar">CO</div>
+        <div>
+          <h1 class="about-title">Centro de Operaciones</h1>
+          <p class="about-role">Economía · Geopolítica · What If</p>
+        </div>
+      </header>
+
+      <div class="about-content prose prose-sideral">
+        <h2>Sobre este blog</h2>
+        <p>
+          <strong>Centro de Operaciones</strong> es un espacio para explorar economía y geopolítica
+          con rigor técnico y creatividad especulativa.
+        </p>
+
+        <h2>Qué encontrarás aquí</h2>
+        <ul>
+          <li><strong>Blog</strong> — Análisis de mercados, política monetaria y economía aplicada</li>
+          <li><strong>Economía</strong> — Guías con modelos matemáticos y LaTeX, desde microeconomía básica hasta temas avanzados</li>
+          <li><strong>What If</strong> — Scripts de economía especulativa: escenarios alternativos y sus consecuencias</li>
+        </ul>
+
+        <h2>Formato</h2>
+        <p>
+          Cada tema se desarrolla en texto largo para el blog y también en videos cortos para
+          YouTube Shorts y TikTok — porque los conceptos económicos deben ser accesibles en
+          cualquier formato.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-page { padding: 4rem 0 6rem; }
+  .about-inner { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+  .about-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(30, 144, 255, 0.1);
+  }
+  .about-avatar {
+    width: 64px;
+    height: 64px;
+    background: rgba(30, 144, 255, 0.1);
+    border: 2px solid rgba(30, 144, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-electric-blue);
+    flex-shrink: 0;
+  }
+  .about-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-nebula-white);
+    margin: 0 0 0.25rem;
+  }
+  .about-role {
+    font-size: 0.9rem;
+    color: rgba(192, 200, 216, 0.55);
+    font-family: var(--font-mono);
+    margin: 0;
+  }
+  .about-content { line-height: 1.8; }
+</style>

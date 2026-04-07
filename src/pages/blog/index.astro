@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/blog/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Blog"
+  description="Análisis técnicos de economía, mercados y geopolítica con datos y modelos."
+>
+  <section class="list-page">
+    <div class="list-inner">
+      <header class="list-header">
+        <h1 class="list-title">Blog</h1>
+        <p class="list-subtitle">Análisis técnicos de economía, mercados y tendencias globales.</p>
+      </header>
+
+      {posts.length > 0 ? (
+        <div class="posts-grid">
+          {posts.map(post => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              slug={post.id}
+              collection="blog"
+              tags={post.data.tags}
+              videoUrl={post.data.videoUrl}
+              latex={post.data.latex}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="empty">Próximamente — los primeros artículos están en camino.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list-page { padding: 3rem 0 5rem; }
+  .list-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .list-header { margin-bottom: 2.5rem; }
+  .list-title {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-nebula-white);
+    margin-bottom: 0.5rem;
+  }
+  .list-subtitle {
+    color: var(--color-stellar-silver);
+    font-size: 1rem;
+    max-width: 55ch;
+  }
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+  .empty {
+    color: rgba(192, 200, 216, 0.4);
+    font-style: italic;
+    padding: 2rem 0;
+  }
+</style>

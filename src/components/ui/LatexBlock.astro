@@ -1,0 +1,50 @@
+---
+interface Props {
+  formula: string;
+  display?: boolean;
+  caption?: string;
+}
+
+const { formula, display = true, caption } = Astro.props;
+---
+
+<div class={`latex-block ${display ? 'latex-block--display' : 'latex-block--inline'}`}>
+  {display ? (
+    <div class="latex-content">
+      $$<Fragment set:text={formula} />$$
+    </div>
+  ) : (
+    <span class="latex-content">
+      $<Fragment set:text={formula} />$
+    </span>
+  )}
+  {caption && <p class="latex-caption">{caption}</p>}
+</div>
+
+<style>
+  .latex-block--display {
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(30, 144, 255, 0.15);
+    border-left: 3px solid var(--color-electric-blue);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .latex-block--inline {
+    display: inline;
+  }
+
+  .latex-content {
+    font-size: 1.05rem;
+  }
+
+  .latex-caption {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: rgba(192, 200, 216, 0.5);
+    font-style: italic;
+    text-align: center;
+  }
+</style>

@@ -105,7 +105,7 @@ const collectionLabels: Record<string, string> = {
     )}
 
     <!-- Contenido MDX -->
-    <div class="prose prose-sideral post-content">
+    <div class="prose prose-ameba post-content">
       <slot />
     </div>
 
@@ -131,7 +131,7 @@ const collectionLabels: Record<string, string> = {
   .post-header {
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(30, 144, 255, 0.1);
+    border-bottom: 1px solid var(--color-slate-shadow);
   }
 
   .post-breadcrumb {
@@ -139,7 +139,7 @@ const collectionLabels: Record<string, string> = {
     align-items: center;
     gap: 0.5rem;
     font-size: 0.8rem;
-    color: rgba(192, 200, 216, 0.45);
+    color: var(--color-steel-gray);
     margin-bottom: 1.25rem;
     font-family: var(--font-mono);
   }
@@ -151,7 +151,7 @@ const collectionLabels: Record<string, string> = {
   }
 
   .post-breadcrumb a:hover {
-    color: var(--color-electric-blue);
+    color: var(--color-lagoon-spark);
   }
 
   .post-tags {
@@ -177,7 +177,7 @@ const collectionLabels: Record<string, string> = {
     font-family: var(--font-headline);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
-    color: var(--color-nebula-white);
+    color: var(--color-arctic-mist);
     line-height: 1.2;
     margin: 0 0 0.75rem;
     letter-spacing: -0.02em;
@@ -185,14 +185,14 @@ const collectionLabels: Record<string, string> = {
 
   .post-scenario {
     font-size: 1rem;
-    color: var(--color-electric-blue);
+    color: var(--color-lagoon-spark);
     font-style: italic;
     margin-bottom: 0.75rem;
   }
 
   .post-description {
     font-size: 1.05rem;
-    color: var(--color-stellar-silver);
+    color: var(--color-light-mauve-aura);
     line-height: 1.7;
     margin-bottom: 1.25rem;
   }
@@ -209,13 +209,13 @@ const collectionLabels: Record<string, string> = {
     align-items: center;
     gap: 0.4rem;
     font-size: 0.82rem;
-    color: rgba(192, 200, 216, 0.5);
+    color: var(--color-steel-gray);
     font-family: var(--font-mono);
   }
 
   .post-updated {
     font-size: 0.8rem;
-    color: rgba(192, 200, 216, 0.4);
+    color: var(--color-steel-gray);
     font-family: var(--font-mono);
   }
 
@@ -225,8 +225,8 @@ const collectionLabels: Record<string, string> = {
     gap: 0.3rem;
     font-size: 0.75rem;
     font-family: var(--font-mono);
-    color: var(--color-electric-blue);
-    background: rgba(30, 144, 255, 0.08);
+    color: var(--color-lagoon-spark);
+    background: rgba(52, 252, 255, 0.08);
     padding: 0.2rem 0.5rem;
     border-radius: 0.25rem;
   }
@@ -237,7 +237,7 @@ const collectionLabels: Record<string, string> = {
 
   .post-footer {
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(30, 144, 255, 0.1);
+    border-top: 1px solid var(--color-slate-shadow);
   }
 
   .back-link {
@@ -252,6 +252,6 @@ const collectionLabels: Record<string, string> = {
   }
 
   .back-link:hover {
-    color: var(--color-electric-blue);
+    color: var(--color-lagoon-spark);
   }
 </style>

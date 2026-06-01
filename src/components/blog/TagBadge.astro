@@ -16,25 +16,24 @@ const { tag, href } = Astro.props;
 <style>
   .tag-badge {
     display: inline-block;
-    padding: 0.2rem 0.55rem;
-    background: rgba(30, 144, 255, 0.1);
-    border: 1px solid rgba(30, 144, 255, 0.2);
-    border-radius: 0.3rem;
-    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--color-lagoon-spark);
+    border-radius: var(--radius-default);
+    font-size: 0.7rem;
     font-family: var(--font-mono);
-    color: var(--color-electric-blue);
-    line-height: 1;
+    color: var(--color-lagoon-spark);
+    letter-spacing: 0.077em;
+    line-height: 1.38;
   }
 
   .tag-badge--link {
     text-decoration: none;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s;
     cursor: pointer;
   }
 
   .tag-badge--link:hover {
-    background: rgba(30, 144, 255, 0.2);
-    border-color: rgba(30, 144, 255, 0.4);
-    color: var(--color-glow-blue);
+    background: rgba(52, 252, 255, 0.1);
   }
 </style>

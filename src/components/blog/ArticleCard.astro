@@ -10,8 +10,8 @@ interface Props {
   tags: string[];
   videoUrl?: string;
   latex?: boolean;
-  scenario?: string;   // para what-if
-  level?: string;      // para economia
+  scenario?: string;
+  level?: string;
 }
 
 const {
@@ -40,31 +40,19 @@ const collectionLabels: Record<string, string> = {
   'what-if': 'What If',
   economia: 'Economía',
 };
-
-const levelColors: Record<string, string> = {
-  intro: '#22c55e',
-  intermedio: '#f59e0b',
-  avanzado: '#ef4444',
-};
 ---
 
-<article class="glass-card article-card">
+<article class="article-card dark-card">
   <div class="card-meta">
     <span class="collection-badge">{collectionLabels[collection]}</span>
-    {level && (
-      <span class="level-badge" style={`color: ${levelColors[level] ?? '#C0C8D8'}`}>
-        {level}
-      </span>
-    )}
+    {level && <span class="level-badge">{level}</span>}
   </div>
 
   <h2 class="card-title">
     <a href={href} class="card-title-link">{title}</a>
   </h2>
 
-  {scenario && (
-    <p class="card-scenario">{scenario}</p>
-  )}
+  {scenario && <p class="card-scenario">{scenario}</p>}
 
   <p class="card-desc">{description}</p>
 
@@ -90,9 +78,9 @@ const levelColors: Record<string, string> = {
         </span>
       )}
     </div>
-    <a href={href} class="card-read-more" aria-label={`Leer: ${title}`}>
+    <a href={href} class="card-read-link" aria-label={`Leer: ${title}`}>
       Leer más
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
@@ -101,11 +89,10 @@ const levelColors: Record<string, string> = {
 
 <style>
   .article-card {
-    border-radius: 0.75rem;
-    padding: 1.5rem;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 10px;
     height: 100%;
   }
 
@@ -118,27 +105,28 @@ const levelColors: Record<string, string> = {
   .collection-badge {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: rgba(192, 200, 216, 0.5);
+    color: var(--color-slate-shadow);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.086em;
   }
 
   .level-badge {
     font-family: var(--font-mono);
     font-size: 0.7rem;
+    color: var(--color-light-mauve-aura);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.077em;
     padding: 0.1rem 0.4rem;
-    background: rgba(255,255,255,0.05);
-    border-radius: 0.2rem;
+    border: 1px solid var(--color-light-mauve-aura);
+    border-radius: var(--radius-default);
   }
 
   .card-title {
     font-family: var(--font-headline);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-nebula-white);
-    line-height: 1.35;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--color-arctic-mist);
+    line-height: 1.3;
     margin: 0;
   }
 
@@ -149,19 +137,19 @@ const levelColors: Record<string, string> = {
   }
 
   .card-title-link:hover {
-    color: var(--color-glow-blue);
+    color: var(--color-lagoon-spark);
   }
 
   .card-scenario {
     font-size: 0.85rem;
-    color: var(--color-electric-blue);
+    color: var(--color-light-mauve-aura);
     font-style: italic;
     margin: 0;
   }
 
   .card-desc {
-    font-size: 0.9rem;
-    color: var(--color-stellar-silver);
+    font-size: 0.875rem;
+    color: var(--color-slate-shadow);
     line-height: 1.6;
     margin: 0;
     flex: 1;
@@ -182,14 +170,15 @@ const levelColors: Record<string, string> = {
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.25rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(30, 144, 255, 0.1);
+    padding-top: 10px;
+    border-top: 1px solid var(--color-steel-gray);
   }
 
   .card-date {
-    font-size: 0.78rem;
-    color: rgba(192, 200, 216, 0.45);
+    font-size: 0.72rem;
+    color: var(--color-steel-gray);
     font-family: var(--font-mono);
+    letter-spacing: 0.077em;
     flex: 1;
   }
 
@@ -199,24 +188,25 @@ const levelColors: Record<string, string> = {
   }
 
   .card-icon {
-    color: rgba(30, 144, 255, 0.5);
+    color: var(--color-slate-shadow);
     display: flex;
     align-items: center;
   }
 
-  .card-read-more {
+  .card-read-link {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-electric-blue);
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--color-lagoon-spark);
     text-decoration: none;
-    transition: color 0.15s, gap 0.15s;
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+    transition: gap 0.15s;
   }
 
-  .card-read-more:hover {
-    color: var(--color-glow-blue);
+  .card-read-link:hover {
     gap: 0.5rem;
   }
 </style>
